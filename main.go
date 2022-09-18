@@ -2,14 +2,10 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
-
-	"github.com/gocolly/colly"
 
 	"github.com/ghodss/yaml"
 	_ "github.com/go-sql-driver/mysql"
@@ -32,7 +28,7 @@ func main() {
 	// Get OS parameter
 	// =====================
 	flag.StringVar(&configFile, "config", "config.yml", "configuration file")
-	flag.StringVar(&bind, "bind", "0.0.0.0:9109", "bind")
+	flag.StringVar(&bind, "bind", "0.0.0.0:9110", "bind")
 	flag.Parse()
 
 	// =====================
@@ -79,6 +75,7 @@ func main() {
 type CoinConfig struct {
 	Metrics map[string]struct {
 		URL         []string
+		Qty         string
 		Type        string
 		Description string
 		Value       string
@@ -94,8 +91,9 @@ type QueryCollector struct{}
 // Describe prometheus describe
 func (e *QueryCollector) Describe(ch chan<- *prometheus.Desc) {
 	for metricName, metric := range coinConfig.Metrics {
+		name := "cryptodb"
 		metric.metricDesc = prometheus.NewDesc(
-			prometheus.BuildFQName(collector, "", metricName),
+			prometheus.BuildFQName(collector, "", name),
 			metric.Description,
 			[]string{"coin"}, nil,
 		)
@@ -106,40 +104,13 @@ func (e *QueryCollector) Describe(ch chan<- *prometheus.Desc) {
 
 // Collect prometheus collect
 func (e *QueryCollector) Collect(ch chan<- prometheus.Metric) {
-	//var val float64
+	log.Infof("metric description for \"%s\" registerd", "cryptodb")
 	for metricName, metric := range coinConfig.Metrics {
-		log.Infof("metric description for \"%s\" registerd", metricName)
-		data := make(map[string]string)
 
-		for url := range metric.URL {
-
-			c := colly.NewCollector()
-			coinName := ""
-			c.OnHTML("div.official-name", func(e *colly.HTMLElement) {
-				coinName = ""
-				e.ForEach("div.price-container", func(_ int, el *colly.HTMLElement) {
-					coinName = e.ChildText("h2:nth-child(1)")
-
-				})
-
-				e.ForEach("div.coin-price-large", func(_ int, el *colly.HTMLElement) {
-					coinResult := e.ChildText("span:nth-child(1)")
-					coinResult = strings.ReplaceAll(coinResult, "$", "")
-					result, err := strconv.ParseFloat(coinResult, 8)
-					data[coinName] = fmt.Sprintf("%f", result)
-					//fmt.Println(time.Now().Format("01-02-2006 15:04:05"), coinName, coinResult)
-					log.Infof(fmt.Sprintf("Coin: %s, Price: %s", coinName, coinResult))
-					if err != nil {
-						panic(err)
-
-					}
-					ch <- prometheus.MustNewConstMetric(metric.metricDesc, prometheus.GaugeValue, result, coinName)
-				})
-
-			})
-			c.Visit(metric.URL[url])
-
+		result, err := strconv.ParseFloat(metric.Qty, 8)
+		if err != nil {
+			panic(err)
 		}
-		log.Infof(fmt.Sprintf("------------------------------------------------------------------------------------------"))
+		ch <- prometheus.MustNewConstMetric(metric.metricDesc, prometheus.GaugeValue, result, metricName)
 	}
 }

@@ -1,12 +1,15 @@
 metrics:
-  crypto:
-    url: 
-      - "https://www.livecoinwatch.com/price/Avalanche-AVAX"
-      - "https://www.livecoinwatch.com/price/Ethereum-ETH"
-      - "https://www.livecoinwatch.com/price/Bitcoin-BTC"
-      - "https://www.livecoinwatch.com/price/API3-API3"
-      - "https://www.livecoinwatch.com/price/Fantom-FTM"
-      - "https://www.livecoinwatch.com/price/Dogecoin-DOGE"
-      - "https://www.livecoinwatch.com/price/USDCoin-USDC"
-    type: gauge
-    description: "Exports the current coin value based on the web scrape"
+  Cronos:
+    qty: 787
+  Cardano:
+    qty: 1410
+  API3:
+    qty: 150
+  Avalanche:
+    qty: 3
+  Fantom:
+    qty: 100
+  Dogecoin:
+    qty: 38.262
+  USD:
+    qty: 1.54
