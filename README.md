@@ -23,20 +23,8 @@ Please note you will need to target the url of a specific page with a coin based
 
 ```
     metrics:
-      Cronos:
+      vanguard:
         qty: 13515
-      Cardano:
-        qty: 141120
-      API3:
-        qty: 125155
-      Avalanche:
-        qty: 3
-      Fantom:
-        qty: 1010
-      Dogecoin:
-        qty: 3152158.262
-      USD:
-        qty: 1125.54
 ```
 
 ## Authors
