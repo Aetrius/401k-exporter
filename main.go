@@ -28,7 +28,7 @@ func main() {
 	// Get OS parameter
 	// =====================
 	flag.StringVar(&configFile, "config", "config.yml", "configuration file")
-	flag.StringVar(&bind, "bind", "0.0.0.0:9110", "bind")
+	flag.StringVar(&bind, "bind", "0.0.0.0:9113", "bind")
 	flag.Parse()
 
 	// =====================
@@ -91,11 +91,11 @@ type QueryCollector struct{}
 // Describe prometheus describe
 func (e *QueryCollector) Describe(ch chan<- *prometheus.Desc) {
 	for metricName, metric := range coinConfig.Metrics {
-		name := "cryptodb"
+		name := "401k"
 		metric.metricDesc = prometheus.NewDesc(
 			prometheus.BuildFQName(collector, "", name),
 			metric.Description,
-			[]string{"coin"}, nil,
+			[]string{"retirement"}, nil,
 		)
 		coinConfig.Metrics[metricName] = metric
 		log.Infof("metric description for \"%s\" registerd", metricName)

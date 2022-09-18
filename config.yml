@@ -1,15 +1,3 @@
 metrics:
-  Cronos:
-    qty: 787
-  Cardano:
-    qty: 1410
-  API3:
-    qty: 150
-  Avalanche:
-    qty: 3
-  Fantom:
-    qty: 100
-  Dogecoin:
-    qty: 38.262
-  USD:
-    qty: 1.54
+  vanguard:
+    qty: 4953.65
