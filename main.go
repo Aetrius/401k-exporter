@@ -74,8 +74,8 @@ func main() {
 // =============================
 type CoinConfig struct {
 	Metrics map[string]struct {
-		URL         []string
-		Qty         string
+		URL []string
+		//Qty         string
 		Type        string
 		Description string
 		Value       string
@@ -107,7 +107,7 @@ func (e *QueryCollector) Collect(ch chan<- prometheus.Metric) {
 	log.Infof("metric description for \"%s\" registerd", "cryptodb")
 	for metricName, metric := range coinConfig.Metrics {
 
-		result, err := strconv.ParseFloat(metric.Qty, 8)
+		result, err := strconv.ParseFloat(metric.Value, 8)
 		if err != nil {
 			panic(err)
 		}
