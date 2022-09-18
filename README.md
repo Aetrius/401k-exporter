@@ -1,11 +1,10 @@
-# Crypto 💸🌐 Web Scraper & Exporter
+# Crypto 💸🌐 Dump & Exporter
 
-This project is utilized to scrape a web endpoints to utilize client data rather than utilize a paid API. Freemium at the cost of my own hardware computing power and storage.
+This project is utilized to provide crypto data to Prometheus. Starting as a stand alone config file, and eventually will be a database.
 
 
 ## Features
 
-- Select URLs From LiveCoinWatch.com for coin metrics
 - Prometheus Exporter
 - Dockerized
 
@@ -24,14 +23,20 @@ Please note you will need to target the url of a specific page with a coin based
 
 ```
     metrics:
-    crypto:
-        url: 
-        - "https://www.livecoinwatch.com/price/Avalanche-AVAX"
-        - "https://www.livecoinwatch.com/price/Ethereum-ETH"
-        - "https://www.livecoinwatch.com/price/Bitcoin-BTC"
-        type: gauge
-        description: "Exports the current coin value based on the web scrape"
-
+      Cronos:
+        qty: 13515
+      Cardano:
+        qty: 141120
+      API3:
+        qty: 125155
+      Avalanche:
+        qty: 3
+      Fantom:
+        qty: 1010
+      Dogecoin:
+        qty: 3152158.262
+      USD:
+        qty: 1125.54
 ```
 
 ## Authors
@@ -47,5 +52,3 @@ Please note you will need to target the url of a specific page with a coin based
 [Live Coin Watch](https://www.livecoinwatch.com/price/Cardano-ADA)
 
 [Web Scrape Resource](https://www.scrapingbee.com/blog/web-scraping-go/)
-
-[Colly Web Scrape Docs](http://go-colly.org/)
